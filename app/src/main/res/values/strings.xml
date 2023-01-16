@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">WordleSolver</string>
+    <string name="suggested_starting_word_lares">Suggested starting Word: lares</string>
+    <string name="submit">Submit</string>
+    <string name="result">Result</string>
+    <string name="word">Word</string>
+    <string name="refreshSymbol">↺</string>
+    <string name="loading">Loading...</string>
+    <string name="errorMessage">There was an error calculating results. Are your entries correct?</string>
+    <string name="suggested_word_german">Suggested Word: rates</string>
+</resources>
