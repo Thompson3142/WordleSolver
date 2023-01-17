@@ -14,12 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 class AsyncCalc extends AsyncTask<String, Void, List<String>> {
-    String out = "";
-    public static List<Character> knownLetters = MainActivity.knownLetters;
-    public static List<String> words = MainActivity.words;
+    String out;
+    public static List<Character> knownLetters;
+    public static List<String> words;
 
     @Override
     protected List<String> doInBackground(String... params) {
+        words = MainActivity.words;
+        knownLetters = MainActivity.knownLetters;
+        out = "";
         List<String> filteredWords = new ArrayList<>(MainActivity.filteredWords);
         String bestWord = params[0];
         String result = params[1];
@@ -183,6 +186,8 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                 highScore = score;
                 bestWord = words.get(i);
             }
+
+            System.out.println("Word: " + words.get(i) + " Score: " + score);
         }
 
         int x = 0;

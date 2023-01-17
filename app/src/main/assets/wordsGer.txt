@@ -5920,7 +5920,6 @@ storg
 story
 stoss
 stotz
-stout
 stove
 stowe
 stowt

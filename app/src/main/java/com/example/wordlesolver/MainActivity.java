@@ -103,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             filteredWords.clear();
-            filteredWords.addAll(words);
             ansWord.getText().clear();
             ansNum.getText().clear();
             submit.setEnabled(true);
             selectLanguage.setEnabled(true);
+            knownLetters.clear();
             if (Objects.equals(fileName, "wordsEng.txt")) {
                 output.setText(R.string.suggested_starting_word_lares);
             }
