@@ -2355,7 +2355,6 @@ hakel
 haken
 haket
 hakig
-hakim
 hakle
 hakst
 hakte

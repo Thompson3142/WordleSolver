@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 output.setText(R.string.suggested_word_german);
             }
-            System.out.println(words.size() + " " + filteredWords.size());
+            //System.out.println(words.size() + " " + filteredWords.size());
         });
 
         submit.setOnClickListener(v -> {
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                System.out.println(words.size() + " " + filteredWords.size());
+                //System.out.println(words.size() + " " + filteredWords.size());
                 String answerNum = ansNum.getText().toString();
                 String answerWord = ansWord.getText().toString();
                 selectLanguage.setEnabled(false);

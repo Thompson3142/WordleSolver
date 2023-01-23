@@ -18,11 +18,13 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
     public static List<Character> knownLetters;
     public static List<String> words;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected List<String> doInBackground(String... params) {
         words = MainActivity.words;
         knownLetters = MainActivity.knownLetters;
         out = "";
+
         List<String> filteredWords = new ArrayList<>(MainActivity.filteredWords);
         String bestWord = params[0];
         String result = params[1];
@@ -117,6 +119,19 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
             }
         }
 
+        if (knownLetters.size() == 0) {
+            for (int i = 0; i < 6; i++) {
+                knownLetters.add(' ');
+            }
+        }
+
+        int x = 0;
+        for (char c : result.toCharArray()) {
+            if (c == '2') {
+                knownLetters.set(x, bestWord.toCharArray()[x]);
+            }
+            x++;
+        }
 
         try {
             out = solve(result, filtered);
@@ -125,6 +140,7 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
         }
 
         MainActivity.filteredWords = filtered;
+        MainActivity.knownLetters = knownLetters;
 
         return filtered;
     }
@@ -151,22 +167,18 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
         MainActivity.refresh.setEnabled(true);
         MainActivity.output.setText(out);
         MainActivity.submit.setEnabled(true);
-        System.out.println(MainActivity.words.size() + " " + MainActivity.filteredWords.size());
+        //System.out.println(MainActivity.words.size() + " " + MainActivity.filteredWords.size());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static String solve(String result, List<String> filteredWords) throws FileNotFoundException, UnsupportedEncodingException {
         //long startTime = System.nanoTime();
-
-        for (int i = 0; i < 6; i++) {
-            knownLetters.add(' ');
-        }
-
         //Random rng = new Random();
         //String test = words.get(rng.nextInt(words.size()));
         //System.err.println(test + " " + compare(test, "HANS"));
 
         float highScore = -10000;
-        String bestWord = "lares";
+        String bestWord = "";
 
         for (int i = 0; i < words.size(); i++) {
             float score = 1;
@@ -187,25 +199,18 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                 bestWord = words.get(i);
             }
 
-            System.out.println("Word: " + words.get(i) + " Score: " + score);
+            //System.out.println("Word: " + words.get(i) + " Score: " + score);
         }
-
-        int x = 0;
-        for (char c : result.toCharArray()) {
-            if (c == '2') {
-                knownLetters.set(x, bestWord.toCharArray()[x]);
-            }
-            x++;
-        }
-
 
         //long endTime   = System.nanoTime();
         //long totalTime = endTime - startTime;
         //System.out.println(totalTime);
 
+
         return bestWord;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static int compare(String s, String t) {
         int ans = 0;
         for (int i = 0; i < s.length(); i++) {
