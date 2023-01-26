@@ -1,4 +1,5 @@
 package com.example.wordlesolver;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -12,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 class AsyncCalc extends AsyncTask<String, Void, List<String>> {
     String out;
@@ -38,23 +40,20 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                     //System.err.println("Filtered because correct letter was not matched: " + filteredWords.get(i) +  " at letter: " + filteredWords.get(i).charAt(j));
                     isPossible = false;
                     break;
-                }
-                if (result.charAt(j) == '0' && filteredWords.get(i).contains(Character.toString(bestWord.charAt(j)))) {
+                } else if (result.charAt(j) == '0' && filteredWords.get(i).contains(Character.toString(bestWord.charAt(j)))) {
                     for (int t = 0; t < bestWord.length(); t++) {
-                        if (filteredWords.get(i).charAt(t) == bestWord.charAt(j) && result.charAt(t) != '2') {
-                            //System.err.println("Filtered because it contains letter that is not in the word: " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j) + " " + isPossible);
+                        if (filteredWords.get(i).charAt(t) == bestWord.charAt(j) && result.charAt(t) == '0') {
+                            //System.err.println("Filtered because it contains letter that is not in the word(1): " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j) + " " + isPossible);
                             isPossible = false;
                             break;
                         }
                     }
-                }
-                if (result.charAt(j) == '1' && bestWord.charAt(j) == filteredWords.get(i).charAt(j)) {
+                } else if (result.charAt(j) == '1' && bestWord.charAt(j) == filteredWords.get(i).charAt(j)) {
                     //System.err.println("Filtered because it letter can't be at this position: " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j));
                     isPossible = false;
                     break;
-                }
-                if (result.charAt(j) == '1' && !filteredWords.get(i).contains(Character.toString(bestWord.charAt(j)))) {
-                    //System.err.println("Filtered because it letter is not in word: " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j));
+                } else if (result.charAt(j) == '1' && !filteredWords.get(i).contains(Character.toString(bestWord.charAt(j)))) {
+                    //System.err.println("Filtered because it letter is not in word(2): " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j));
                     isPossible = false;
                     break;
                 } else {
@@ -150,13 +149,10 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
         if (filteredWords.size() == 1) {
             out = "Answer: " + filteredWords.get(0);
             MainActivity.submit.setEnabled(false);
-        }
-        else if (filteredWords.size() == 0) {
+        } else if (filteredWords.size() == 0) {
             out = "No possible words left!";
             MainActivity.submit.setEnabled(false);
-        }
-        else
-        {
+        } else {
             MainActivity.ansWord.setText(out);
             MainActivity.ansNum.getText().clear();
             out = "Suggested Word: " + out;
