@@ -51,15 +51,16 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                     }
                     if (isPossible) {
                         for (int t = 0; t < bestWord.length(); t++) {
-                            if (filteredWords.get(i).charAt(t) == bestWord.charAt(j) && result.charAt(j) == '0') {
+                            if (filteredWords.get(i).charAt(j) == bestWord.charAt(t) && result.charAt(j) == '0') {
                                 isPossible = false;
                                 for (int n = 0; n < bestWord.length(); n++) {
-                                    if (filteredWords.get(i).charAt(n) == bestWord.charAt(j) && !usedPositions.contains(n)) {
+                                    if (filteredWords.get(i).charAt(j) == bestWord.charAt(n) && !usedPositions.contains(n)) {
                                         isPossible = true;
                                         usedPositions.add(n);
                                     }
                                 }
                                 if (!isPossible) {
+                                    //System.err.println("Filtered because it contains letter that is not in the word(3): " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j) + " " + isPossible);
                                     break;
                                 }
                             }
@@ -115,7 +116,7 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                 }
 
                 if (newLetter) {
-                    lettersB.add(filteredWords.get(i).charAt(j));
+                    lettersB.add(bestWord.charAt(j));
                     numLettersB.add(1);
                 }
             }
@@ -123,9 +124,9 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
             for (int j = 0; j < lettersB.size(); j++) {
                 for (int k = 0; k < letters.size(); k++) {
                     if (letters.get(k) == lettersB.get(j)) {
-                        if (numLetters.get(k) + 1 < numLettersB.get(j)) {
+                        if (numLetters.get(k) < numLettersB.get(j) -1) {
                             isPossible = false;
-                            //System.err.println("Filtered because number of letters is too small: " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j) + " " + letters.get(k) + " " + numLetters.get(k) + " " + lettersB.get(j) + " " + numLettersB.get(j));
+                            //System.err.println("Filtered because number of letters is too small: " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j) + " | " + letters.get(k) + " " + numLetters.get(k) + " | " + lettersB.get(j) + " " + numLettersB.get(j));
                             break;
                         }
                     }
