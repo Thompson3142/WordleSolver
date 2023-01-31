@@ -54,7 +54,7 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                             if (filteredWords.get(i).charAt(t) == bestWord.charAt(j) && result.charAt(j) == '0') {
                                 isPossible = false;
                                 for (int n = 0; n < bestWord.length(); n++) {
-                                    if (filteredWords.get(i).charAt(n) == bestWord.charAt(j) && result.charAt(n) != '0' && !usedPositions.contains(n)) {
+                                    if (filteredWords.get(i).charAt(n) == bestWord.charAt(j) && !usedPositions.contains(n)) {
                                         isPossible = true;
                                         usedPositions.add(n);
                                     }
