@@ -53,7 +53,6 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                         for (int t = 0; t < bestWord.length(); t++) {
                             if (filteredWords.get(i).charAt(t) == bestWord.charAt(j) && result.charAt(j) == '0') {
                                 isPossible = false;
-                                System.out.println(filteredWords.get(i) + " " + t + " Best Word: " + bestWord + " " + j);
                                 for (int n = 0; n < bestWord.length(); n++) {
                                     if (filteredWords.get(i).charAt(n) == bestWord.charAt(j) && result.charAt(n) != '0' && !usedPositions.contains(n)) {
                                         isPossible = true;
@@ -167,6 +166,9 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected void onPostExecute(List<String> filteredWords) {
+        MainActivity.refresh.setEnabled(true);
+        MainActivity.submit.setEnabled(true);
+
         if (filteredWords.size() == 1) {
             out = "Answer: " + filteredWords.get(0);
             MainActivity.submit.setEnabled(false);
@@ -181,9 +183,7 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
             filteredWords.forEach(str -> out += str + " ");
         }
 
-        MainActivity.refresh.setEnabled(true);
         MainActivity.output.setText(out);
-        MainActivity.submit.setEnabled(true);
         //System.out.println(MainActivity.words.size() + " " + MainActivity.filteredWords.size());
     }
 

@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     arr[1] = answerNum;
                     asyncCalc.execute(arr);
                 } else {
+                    refresh.setEnabled(true);
                     output.setText(R.string.errorMessage);
                 }
             } catch (Exception e) {
