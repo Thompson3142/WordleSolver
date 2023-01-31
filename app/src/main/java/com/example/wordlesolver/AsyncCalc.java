@@ -35,6 +35,7 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
             boolean isPossible = true;
             List<Character> letters = new ArrayList<>();
             List<Integer> numLetters = new ArrayList<>();
+            List<Integer> usedPositions = new ArrayList<>();
             for (int j = 0; j < bestWord.length(); j++) {
                 if (result.charAt(j) == '2' && (bestWord.charAt(j) != filteredWords.get(i).charAt(j))) {
                     //System.err.println("Filtered because correct letter was not matched: " + filteredWords.get(i) +  " at letter: " + filteredWords.get(i).charAt(j));
@@ -42,10 +43,27 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                     break;
                 } else if (result.charAt(j) == '0' && filteredWords.get(i).contains(Character.toString(bestWord.charAt(j)))) {
                     for (int t = 0; t < bestWord.length(); t++) {
-                        if (filteredWords.get(i).charAt(t) == bestWord.charAt(j) && result.charAt(t) == '0') {
+                        if (filteredWords.get(i).charAt(t) == bestWord.charAt(t) && result.charAt(t) == '0') {
                             //System.err.println("Filtered because it contains letter that is not in the word(1): " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j) + " " + isPossible);
                             isPossible = false;
                             break;
+                        }
+                    }
+                    if (isPossible) {
+                        for (int t = 0; t < bestWord.length(); t++) {
+                            if (filteredWords.get(i).charAt(t) == bestWord.charAt(j) && result.charAt(j) == '0') {
+                                isPossible = false;
+                                System.out.println(filteredWords.get(i) + " " + t + " Best Word: " + bestWord + " " + j);
+                                for (int n = 0; n < bestWord.length(); n++) {
+                                    if (filteredWords.get(i).charAt(n) == bestWord.charAt(j) && result.charAt(n) != '0' && !usedPositions.contains(n)) {
+                                        isPossible = true;
+                                        usedPositions.add(n);
+                                    }
+                                }
+                                if (!isPossible) {
+                                    break;
+                                }
+                            }
                         }
                     }
                 } else if (result.charAt(j) == '1' && bestWord.charAt(j) == filteredWords.get(i).charAt(j)) {
@@ -72,6 +90,9 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                         letters.add(filteredWords.get(i).charAt(j));
                         numLetters.add(1);
                     }
+                }
+                if (!isPossible) {
+                    break;
                 }
             }
 
