@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     arr[0] = answerWord.toLowerCase();
                     arr[1] = answerNum;
                     asyncCalc.execute(arr);
+
                 } else {
                     refresh.setEnabled(true);
                     output.setText(R.string.errorMessage);
