@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public static EditText ansWord;
     public static EditText ansNum;
     public static String fileName = "wordsEng.txt";
-    public static Spinner selectLanguage;
+    public  static Spinner selectLanguage;
 
     public static List<String> readFiles(Context context) throws UnsupportedEncodingException, FileNotFoundException {
         AssetManager am = context.getAssets();
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String[] arraySpinner = {"English", "German"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arraySpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectLanguage.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {

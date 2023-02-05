@@ -32,12 +32,14 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
         String result = params[1];
         List<String> filtered = new ArrayList<>();
         for (int i = 0; i < filteredWords.size(); i++) {
+            if (filteredWords.get(i).contains("echse")) {
+                System.out.println("???");
+            }
             boolean isPossible = true;
             List<Character> letters = new ArrayList<>();
             List<Integer> numLetters = new ArrayList<>();
             for (int j = 0; j < bestWord.length(); j++) {
-                switch (result.charAt(j))
-                {
+                switch (result.charAt(j)) {
                     case '0':
                         if (filteredWords.get(i).contains(Character.toString(bestWord.charAt(j)))) {
                             if (filteredWords.get(i).charAt(j) == bestWord.charAt(j) && result.charAt(j) == '0') {
@@ -48,7 +50,7 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                             if (isPossible) {
                                 isPossible = false;
                                 for (int n = 0; n < bestWord.length(); n++) {
-                                    if (bestWord.charAt(j) == bestWord.charAt(n) && result.charAt(n) == '1') {
+                                    if (bestWord.charAt(j) == bestWord.charAt(n) && result.charAt(n) != '0') {
                                         isPossible = true;
                                     }
                                 }
@@ -63,21 +65,19 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
 
                     case '1':
                         if (bestWord.charAt(j) == filteredWords.get(i).charAt(j)) {
-                        //System.err.println("Filtered because it letter can't be at this position: " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j));
+                            //System.err.println("Filtered because it letter can't be at this position: " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j));
                             isPossible = false;
-                        }
-                        else if (!filteredWords.get(i).contains(Character.toString(bestWord.charAt(j)))) {
+                        } else if (!filteredWords.get(i).contains(Character.toString(bestWord.charAt(j)))) {
                             //System.err.println("Filtered because it letter is not in word(2): " + filteredWords.get(i) + " at letter: " + filteredWords.get(i).charAt(j));
                             isPossible = false;
                         }
                         break;
 
                     case '2':
-                         if (bestWord.charAt(j) != filteredWords.get(i).charAt(j))
-                         {
-                             //System.err.println("Filtered because correct letter was not matched: " + filteredWords.get(i) +  " at letter: " + filteredWords.get(i).charAt(j));
-                             isPossible = false;
-                         }
+                        if (bestWord.charAt(j) != filteredWords.get(i).charAt(j)) {
+                            //System.err.println("Filtered because correct letter was not matched: " + filteredWords.get(i) +  " at letter: " + filteredWords.get(i).charAt(j));
+                            isPossible = false;
+                        }
                 }
                 if (isPossible) {
                     boolean newLetter = true;
@@ -93,9 +93,7 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                         letters.add(filteredWords.get(i).charAt(j));
                         numLetters.add(1);
                     }
-                }
-                else
-                {
+                } else {
                     break;
                 }
             }
@@ -111,13 +109,14 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
 
                 for (int j = 0; j < bestWord.length(); j++) {
                     boolean newLetter = true;
-                    for (int k = 0; k < lettersB.size(); k++) {
-                        if (lettersB.get(k) == bestWord.charAt(j) && result.charAt(j) != '0')
-                        {
-                            newLetter = false;
-                            int inc = numLettersB.get(k) + 1;
-                            numLettersB.set(k, inc);
-                            break;
+                    if (result.charAt(j) == '0') {
+                        for (int k = 0; k < lettersB.size(); k++) {
+                            if (lettersB.get(k) == bestWord.charAt(j)) {
+                                newLetter = false;
+                                int inc = numLettersB.get(k) + 1;
+                                numLettersB.set(k, inc);
+                                break;
+                            }
                         }
                     }
 
