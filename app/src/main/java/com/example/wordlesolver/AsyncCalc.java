@@ -109,7 +109,7 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
 
                 for (int j = 0; j < bestWord.length(); j++) {
                     boolean newLetter = true;
-                    if (result.charAt(j) == '0') {
+                    if (result.charAt(j) != '0') {
                         for (int k = 0; k < lettersB.size(); k++) {
                             if (lettersB.get(k) == bestWord.charAt(j)) {
                                 newLetter = false;
@@ -118,11 +118,11 @@ class AsyncCalc extends AsyncTask<String, Void, List<String>> {
                                 break;
                             }
                         }
-                    }
 
-                    if (newLetter) {
-                        lettersB.add(bestWord.charAt(j));
-                        numLettersB.add(1);
+                        if (newLetter) {
+                            lettersB.add(bestWord.charAt(j));
+                            numLettersB.add(1);
+                        }
                     }
                 }
 
