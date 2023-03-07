@@ -4046,7 +4046,6 @@ mimus
 minen
 minim
 minis
-minke
 minks
 minne
 minnt

@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public static EditText ansNum;
     public static String fileName = "wordsEng.txt";
     public  static Spinner selectLanguage;
+    private PopupWindow popupWindow = null;
 
     public static List<String> readFiles(Context context) throws UnsupportedEncodingException, FileNotFoundException {
         AssetManager am = context.getAssets();
@@ -66,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         ansWord = findViewById(R.id.inputWord);
         output = findViewById(R.id.outputTxt);
         refresh = findViewById(R.id.refreshBtn);
+
+        Button howToPlayBtn = findViewById(R.id.howToPlayBtn);
+        howToPlayBtn.setOnClickListener(this::showRules);
 
         selectLanguage = findViewById(R.id.spinner);
         if (savedInstanceState != null) {
@@ -170,5 +179,38 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("selectLanguage", selectLanguage.getSelectedItemPosition());
 
         super.onSaveInstanceState(outState);
+    }
+
+    public void showRules(View view){
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_window, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+        }
+        super.onDestroy();
     }
 }

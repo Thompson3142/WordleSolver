@@ -1582,8 +1582,6 @@ comas
 combe
 combo
 combs
-comdr
-comdt
 comer
 comes
 comet
